@@ -17,13 +17,13 @@ export const Header: React.FC = () => {
     >
       <Box sx={{ fontWeight: 'bold', fontSize: '24px', color: '#000' }}>Logo</Box>
       <Button
-        variant="outlined"
+        variant="contained"
         sx={{
-          color: '#000000',
-          borderColor: '#000000',
+          backgroundColor: '#64748B',
+          color: '#ffffff',
         }}
       >
-        Login
+        시작하기
       </Button>
     </Stack>
   );
