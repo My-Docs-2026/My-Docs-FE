@@ -10,7 +10,6 @@ export const Header: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: '#ffffff',
-        borderBottom: '1px solid #fd0303',
         padding: '0 40px',
         boxSizing: 'border-box',
       }}
