@@ -4,9 +4,18 @@ import { Header } from '../pages/Common/Header';
 
 export const AppRouter: React.FC = () => {
   return (
-    <Box>
+    <Box
+      sx={{
+        backgroundColor: '#EFF6FF',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Header />
-      <Outlet></Outlet>
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };
