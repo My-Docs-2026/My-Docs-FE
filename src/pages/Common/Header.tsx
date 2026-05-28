@@ -2,28 +2,37 @@ import { Box, Button, Stack } from '@mui/material';
 
 export const Header: React.FC = () => {
   return (
-    <Stack
-      direction="row"
+    <Box
       sx={{
         width: '100%',
-        height: '80px',
-        alignItems: 'center',
-        justifyContent: 'space-between',
         backgroundColor: '#ffffff',
-        padding: '0 40px',
-        boxSizing: 'border-box',
+        display: 'flex',
+        justifyContent: 'center',
       }}
     >
-      <Box sx={{ fontWeight: 'bold', fontSize: '24px', color: '#000' }}>Logo</Box>
-      <Button
-        variant="contained"
+      <Stack
+        direction="row"
         sx={{
-          backgroundColor: '#64748B',
-          color: '#ffffff',
+          width: '100%',
+          maxWidth: '1920px',
+          height: '80px',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 120px',
+          boxSizing: 'border-box',
         }}
       >
-        시작하기
-      </Button>
-    </Stack>
+        <Box sx={{ fontWeight: 'bold', fontSize: '24px', color: '#000' }}>Logo</Box>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: '#64748B',
+            color: '#ffffff',
+          }}
+        >
+          시작하기
+        </Button>
+      </Stack>
+    </Box>
   );
 };
