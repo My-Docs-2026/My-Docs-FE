@@ -1,4 +1,5 @@
 import { Box, Button, Card, Stack, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export const HomeUpperBannerText: React.FC = () => {
   const cookieSX = {
@@ -25,6 +26,8 @@ export const HomeUpperBannerText: React.FC = () => {
     fontWeight: 400,
     color: '#475569',
   };
+
+  const navigate = useNavigate();
   return (
     <Stack
       sx={{
@@ -63,6 +66,9 @@ export const HomeUpperBannerText: React.FC = () => {
           color: '#FFFFFF',
           fontSize: '20px',
           fontWeight: 600,
+        }}
+        onClick={() => {
+          navigate('/upload');
         }}
       >
         문서 분석하기

@@ -16,7 +16,7 @@ export const HomeUpperBanner: React.FC = () => {
           src="src\assets\Vector.png"
           sx={{
             width: 'auto',
-            height: '450px', // 592px -> 450px로 축소
+            height: '450px',
           }}
         ></Box>
       </Stack>
