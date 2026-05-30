@@ -1,19 +1,21 @@
 import { Stack, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import { useState, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 export const UploadDocsFormFile: React.FC = () => {
-  const [value, setValue] = useState('1');
-  const [file, setFile] = useState<File | null>(null);
+  const { register, setValue, watch } = useFormContext();
+  const [tab, setTab] = useState('1');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const file = watch('file');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    setTab(newValue);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
+      setValue('file', event.target.files[0]);
     }
   };
 
@@ -24,7 +26,7 @@ export const UploadDocsFormFile: React.FC = () => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFile(e.dataTransfer.files[0]);
+      setValue('file', e.dataTransfer.files[0]);
     }
   };
 
@@ -46,9 +48,9 @@ export const UploadDocsFormFile: React.FC = () => {
   return (
     <Stack sx={stackSx}>
       <Typography sx={titleSx}>2. 문서 업로드</Typography>
-      <TabContext value={value}>
+      <TabContext value={tab}>
         <Tabs
-          value={value}
+          value={tab}
           onChange={handleChange}
           sx={{
             width: '100%',
@@ -100,14 +102,17 @@ export const UploadDocsFormFile: React.FC = () => {
         </TabPanel>
         <TabPanel value="2" sx={{ width: '100%', p: '10px 0' }}>
           <TextField
+            {...register('text')}
+            fullWidth
             sx={{
-              width: '100%',
-              height: '200px',
+              '& .MuiInputBase-root': {
+                height: '200px',
+                alignItems: 'start',
+              },
               borderRadius: '10px',
             }}
             placeholder="분석할 텍스트를 입력해주세요"
             multiline
-            rows={5}
           />
         </TabPanel>
       </TabContext>
