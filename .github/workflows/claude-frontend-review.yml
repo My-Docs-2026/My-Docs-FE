@@ -1,0 +1,69 @@
+name: Claude Frontend PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - ".github/workflows/claude-frontend-review.yml"
+      - "src/**"
+      - "public/**"
+      - "index.html"
+      - "vite.config.ts"
+      - "vite.config.js"
+      - "vite.config.mts"
+      - "vite.config.mjs"
+      - "tsconfig.json"
+      - "tsconfig.app.json"
+      - "tsconfig.node.json"
+      - "eslint.config.js"
+      - "eslint.config.mjs"
+      - ".eslintrc"
+      - ".eslintrc.json"
+      - ".eslintrc.js"
+      - "package.json"
+      - "package-lock.json"
+      - "yarn.lock"
+      - "pnpm-lock.yaml"
+
+jobs:
+  claude-review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Claude review for React + Vite frontend
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          plugin_marketplaces: "https://github.com/anthropics/claude-code.git"
+          plugins: "code-review@claude-code-plugins"
+          prompt: |
+            /code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}
+
+            Review this pull request as a senior React + Vite frontend reviewer.
+
+            Focus on:
+            - React component design and separation of concerns
+            - hook usage, dependency arrays, stale closure risks, side effects
+            - state handling, async UI flows, loading/error/empty states
+            - TypeScript safety in TS/TSX files
+            - accessibility: semantic HTML, keyboard support, ARIA, labels, focus handling
+            - rendering performance: unnecessary re-renders, memoization misuse, large effects
+            - Vite/frontend config changes that can break build or dev experience
+            - styling maintainability for CSS, module CSS, or component styling patterns
+            - user-facing bugs, edge cases, and regressions
+
+            Ignore backend, infra, CI, and server-side concerns unless they directly affect the frontend build or runtime behavior.
+
+            Leave comments only for specific, actionable issues.
+            Prioritize correctness, accessibility, maintainability, and performance over style nitpicks.
+            Respond in Korean.
