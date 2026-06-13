@@ -4,6 +4,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../stores/Auth/useLogin';
 import { LoginDialog } from '../Components/Auth/LoginDialog';
+import { Profile } from '../Components/Profile/Profile';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -36,28 +37,7 @@ export const Header: React.FC = () => {
         <Box sx={{ fontWeight: 'bold', fontSize: '24px', color: '#000' }}>Logo</Box>
 
         {isLoggedIn ? (
-          <Stack direction="row" sx={{ alignItems: 'center', gap: '8px' }}>
-            <Button
-              variant="text"
-              disableRipple
-              sx={{ fontSize: '15px', fontWeight: 500, color: '#475569' }}
-            >
-              문서 목록
-            </Button>
-
-            <IconButton onClick={(e) => setHistoryAnchor(e.currentTarget)}>
-              <HistoryIcon sx={{ color: '#475569' }} />
-            </IconButton>
-            <Menu
-              anchorEl={historyAnchor}
-              open={!!historyAnchor}
-              onClose={() => setHistoryAnchor(null)}
-            />
-
-            <IconButton onClick={() => navigate('/profile')}>
-              <Avatar sx={{ width: 36, height: 36, bgcolor: '#2563EB' }} />
-            </IconButton>
-          </Stack>
+          <Profile />
         ) : (
           <Button
             variant="contained"
