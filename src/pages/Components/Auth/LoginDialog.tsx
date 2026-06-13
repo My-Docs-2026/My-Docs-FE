@@ -1,5 +1,5 @@
 import { Button, Dialog, Divider, Stack, TextField, Typography } from '@mui/material';
-import { useLogin } from '../../../stores/Auth/UseLogin';
+import { useLogin } from '../../../stores/Auth/useLogin';
 import { LoginDialogForm } from './LoginDialogForm';
 import { LoginDialogAlter } from './LoginDialogAlter';
 
