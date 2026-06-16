@@ -17,6 +17,7 @@ export const Profile: React.FC = () => {
     sessionStorage.removeItem('accessToken');
     setIsLoggedIn(false);
     setProfileAnchor(null);
+    navigate('/');
   };
 
   return (
