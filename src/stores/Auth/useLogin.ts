@@ -2,9 +2,8 @@ import { create } from 'zustand';
 import type { IAuth } from '../../types/IAuth';
 
 export const useLogin = create<IAuth>((set) => ({
-  isLoginDialogOpen: true,
-  setIsLoginDialogOpen: (isLoginDialogOpen: boolean) =>
-    set({
-      isLoginDialogOpen: isLoginDialogOpen,
-    }),
+  isLoginDialogOpen: false,
+  setIsLoginDialogOpen: (isLoginDialogOpen: boolean) => set({ isLoginDialogOpen }),
+  isLoggedIn: !!sessionStorage.getItem('accessToken'),
+  setIsLoggedIn: (isLoggedIn: boolean) => set({ isLoggedIn }),
 }));
