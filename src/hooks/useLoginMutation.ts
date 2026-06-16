@@ -9,7 +9,7 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationFn: login,
     onSuccess: ({ accessToken }) => {
-      localStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('accessToken', accessToken);
       setIsLoggedIn(true);
       setIsLoginDialogOpen(false);
     },
