@@ -1,11 +1,23 @@
 import { useState } from 'react';
-import { Avatar, Button, IconButton, Menu, Stack } from '@mui/material';
+import { Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Stack } from '@mui/material';
 import HistoryIcon from '@mui/icons-material/History';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../../stores/Auth/useLogin';
 
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
+  const setIsLoggedIn = useLogin((state) => state.setIsLoggedIn);
+
   const [historyAnchor, setHistoryAnchor] = useState<null | HTMLElement>(null);
+  const [profileAnchor, setProfileAnchor] = useState<null | HTMLElement>(null);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('accessToken');
+    setIsLoggedIn(false);
+    setProfileAnchor(null);
+  };
 
   return (
     <Stack direction="row" sx={{ alignItems: 'center', gap: '8px' }}>
@@ -26,9 +38,24 @@ export const Profile: React.FC = () => {
         onClose={() => setHistoryAnchor(null)}
       />
 
-      <IconButton onClick={() => navigate('/profile')}>
+      <IconButton onClick={(e) => setProfileAnchor(e.currentTarget)}>
         <Avatar sx={{ width: 36, height: 36, bgcolor: '#2563EB' }} />
       </IconButton>
+      <Menu
+        anchorEl={profileAnchor}
+        open={!!profileAnchor}
+        onClose={() => setProfileAnchor(null)}
+      >
+        <MenuItem onClick={() => { navigate('/profile'); setProfileAnchor(null); }}>
+          <ListItemIcon><PersonIcon fontSize="small" /></ListItemIcon>
+          프로필
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon><LogoutIcon fontSize="small" /></ListItemIcon>
+          로그아웃
+        </MenuItem>
+      </Menu>
     </Stack>
   );
 };
