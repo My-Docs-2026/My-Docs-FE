@@ -1,6 +1,6 @@
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useLoginMutation } from '../../../hooks/useLoginMutation';
+import { useLoginMutation } from '../../../../hooks/useLoginMutation';
 
 interface LoginFormValues {
   email: string;
@@ -8,7 +8,11 @@ interface LoginFormValues {
 }
 
 export const LoginDialogForm: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>();
   const { mutate: loginMutate, isPending, error } = useLoginMutation();
 
   const onSubmit = (data: LoginFormValues) => {
@@ -48,7 +52,10 @@ export const LoginDialogForm: React.FC = () => {
           helperText={errors.email?.message}
           {...register('email', {
             required: '이메일을 입력해주세요.',
-            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: '올바른 이메일 형식이 아닙니다.' },
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: '올바른 이메일 형식이 아닙니다.',
+            },
           })}
         />
       </Stack>
