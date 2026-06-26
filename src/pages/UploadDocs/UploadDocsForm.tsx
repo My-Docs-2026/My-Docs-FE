@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UploadDocsFormTitle } from './UploadDocsFormTitle';
 import { UploadDocsFormFile } from './UploadDocsFormFile';
 import { UploadDocsFormModel } from './UploadDocsFormModel';
+import { useUploadAnalyzeMutation } from '../../hooks/useUploadAnalyzeMutation';
 
 export interface UploadDocsFormValues {
   title: string;
@@ -14,6 +15,7 @@ export interface UploadDocsFormValues {
 
 export const UploadDocsForm: React.FC = () => {
   const navigate = useNavigate();
+  const { mutate: uploadAnalyzeMutate, isPending } = useUploadAnalyzeMutation();
   const methods = useForm<UploadDocsFormValues>({
     defaultValues: {
       title: '',
@@ -24,9 +26,11 @@ export const UploadDocsForm: React.FC = () => {
   });
 
   const onSubmit = (data: UploadDocsFormValues) => {
-    console.log('Form Data:', data);
-    // logic for analysis...
-    // navigate('/');
+    uploadAnalyzeMutate(data, {
+      onSuccess: () => {
+        navigate('/');
+      },
+    });
   };
 
   return (
@@ -77,7 +81,7 @@ export const UploadDocsForm: React.FC = () => {
             },
           }}
         >
-          분석 시작하기
+          {isPending ? '분석 중...' : '분석 시작하기'}
         </Button>
       </Stack>
     </FormProvider>
