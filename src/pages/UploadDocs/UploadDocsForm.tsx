@@ -27,8 +27,8 @@ export const UploadDocsForm: React.FC = () => {
 
   const onSubmit = (data: UploadDocsFormValues) => {
     uploadAnalyzeMutate(data, {
-      onSuccess: () => {
-        navigate('/');
+      onSuccess: ({ documentId }) => {
+        navigate(`/analyzing/${documentId}`);
       },
     });
   };
