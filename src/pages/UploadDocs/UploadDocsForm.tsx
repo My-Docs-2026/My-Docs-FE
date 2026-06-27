@@ -8,6 +8,7 @@ import { useUploadAnalyzeMutation } from '../../hooks/useUploadAnalyzeMutation';
 
 export interface UploadDocsFormValues {
   title: string;
+  mode: 'FILE' | 'TEXT';
   file: File | null;
   text: string;
   model: string;
@@ -19,6 +20,7 @@ export const UploadDocsForm: React.FC = () => {
   const methods = useForm<UploadDocsFormValues>({
     defaultValues: {
       title: '',
+      mode: 'FILE',
       file: null,
       text: '',
       model: 'basic',
