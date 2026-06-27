@@ -14,4 +14,22 @@ export interface ILoginResponse {
   accessToken: string;
 }
 
+export interface ISendVerificationEmailRequest {
+  email: string;
+}
+
+export interface IVerifyEmailRequest {
+  email: string;
+  code: string;
+}
+
+export interface ISignUpRequest {
+  email: string;
+  password: string;
+}
+
+export interface IMessageResponse {
+  message: string;
+}
+
 
