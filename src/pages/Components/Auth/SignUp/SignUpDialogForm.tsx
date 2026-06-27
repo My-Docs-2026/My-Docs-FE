@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Button } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
+import { useRegisterMutation } from '../../../../hooks/useSignUpMutations';
 import { SignUpEmail } from './SignUpEmail';
 import { SignUpPassword } from './SignUpPassword';
 
@@ -10,12 +12,20 @@ export interface SignUpFormValues {
   passwordConfirm: string;
 }
 
-export const SignUpDialogForm: React.FC = () => {
-  const methods = useForm<SignUpFormValues>();
+interface Props {
+  onSwitchToLogin: () => void;
+}
 
-  const onSubmit = (data: SignUpFormValues) => {
-    // TODO: 회원가입 API 연동
-    console.log(data);
+export const SignUpDialogForm: React.FC<Props> = ({ onSwitchToLogin }) => {
+  const [isVerified, setIsVerified] = useState(false);
+  const methods = useForm<SignUpFormValues>();
+  const { mutate: registerMutate, isPending } = useRegisterMutation();
+
+  const onSubmit = ({ email, password }: SignUpFormValues) => {
+    registerMutate(
+      { email, password },
+      { onSuccess: onSwitchToLogin },
+    );
   };
 
   return (
@@ -24,14 +34,15 @@ export const SignUpDialogForm: React.FC = () => {
         onSubmit={methods.handleSubmit(onSubmit)}
         style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}
       >
-        <SignUpEmail />
+        <SignUpEmail onVerified={() => setIsVerified(true)} />
         <SignUpPassword />
         <Button
           type="submit"
           variant="contained"
+          disabled={!isVerified || isPending}
           sx={{ height: '48px', borderRadius: '10px', marginTop: '4px' }}
         >
-          회원가입
+          {isPending ? '가입 중...' : '회원가입'}
         </Button>
       </form>
     </FormProvider>

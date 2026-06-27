@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { SignUpDialogForm } from './SignUpDialogForm';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 export const SignUpDialog: React.FC<Props> = ({ onSwitchToLogin }) => {
   return (
     <Stack sx={{ width: '100%', alignItems: 'center', gap: '15px' }}>
-      <SignUpDialogForm />
+      <SignUpDialogForm onSwitchToLogin={onSwitchToLogin} />
       <Button
         variant="text"
         disableRipple
