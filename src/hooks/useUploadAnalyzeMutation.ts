@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { uploadFile, uploadAnalyze } from '../api/docs';
+import { uploadFile, uploadDocs } from '../api/docs';
 import type { UploadDocsFormValues } from '../pages/UploadDocs/UploadDocsForm';
 
-const uploadAnalyzeFlow = async (data: UploadDocsFormValues) => {
+const uploadDocsFlow = async (data: UploadDocsFormValues) => {
   if (data.file) {
     const { fileUrl } = await uploadFile(data.file);
-    return uploadAnalyze(data, fileUrl);
+    return uploadDocs(data, fileUrl);
   }
-  return uploadAnalyze(data);
+  return uploadDocs(data);
 };
 
 export const useUploadAnalyzeMutation = () =>
-  useMutation({ mutationFn: uploadAnalyzeFlow });
+  useMutation({ mutationFn: uploadDocsFlow });
