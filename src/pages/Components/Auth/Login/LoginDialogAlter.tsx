@@ -1,7 +1,10 @@
-import { Button, Dialog, Divider, Stack, TextField, Typography } from '@mui/material';
-import { useLogin } from '../../../stores/Auth/useLogin';
+import { Button, Divider, Stack } from '@mui/material';
 
-export const LoginDialogAlter: React.FC = () => {
+interface Props {
+  onSwitchToSignUp: () => void;
+}
+
+export const LoginDialogAlter: React.FC<Props> = ({ onSwitchToSignUp }) => {
   const textButtonSx = {
     fontSize: '14px',
     color: '#475569',
@@ -63,7 +66,7 @@ export const LoginDialogAlter: React.FC = () => {
           비밀번호 찾기
         </Button>
         <Divider orientation="vertical" />
-        <Button variant="text" disableRipple sx={textButtonSx}>
+        <Button variant="text" disableRipple sx={textButtonSx} onClick={onSwitchToSignUp}>
           회원가입
         </Button>
       </Stack>

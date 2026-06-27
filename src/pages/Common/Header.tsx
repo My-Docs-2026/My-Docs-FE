@@ -3,7 +3,7 @@ import { Avatar, Box, Button, IconButton, Menu, Stack } from '@mui/material';
 import HistoryIcon from '@mui/icons-material/History';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../stores/Auth/useLogin';
-import { LoginDialog } from '../Components/Auth/LoginDialog';
+import { LoginDialog } from '../Components/Auth/Login/LoginDialog';
 import { Profile } from '../Components/Profile/Profile';
 
 export const Header: React.FC = () => {
