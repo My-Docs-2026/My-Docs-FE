@@ -1,5 +1,4 @@
 import axiosInstance from './axiosInstance';
-import type { UploadDocsFormValues } from '../pages/UploadDocs/UploadDocsForm';
 import type {
   IFileUploadResponse,
   IUploadDocsRequest,
@@ -11,24 +10,26 @@ import type {
 export const uploadFile = (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
+  console.log('[uploadFile] request:', { fileName: file.name, fileSize: file.size, fileType: file.type });
   return axiosInstance
     .post<IFileUploadResponse>('/v1/docs/file', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-    .then((res) => res.data);
+    .then((res) => {
+      console.log('[uploadFile] response:', res.data);
+      return res.data;
+    });
 };
 
-const toUploadDocsRequest = (data: UploadDocsFormValues, fileUrl?: string): IUploadDocsRequest => {
-  if (fileUrl) {
-    return { title: data.title || null, type: 'FILE', file_url: fileUrl, raw_text: null };
-  }
-  return { title: data.title || null, type: 'TEXT', file_url: null, raw_text: data.text || null };
+export const uploadDocs = (request: IUploadDocsRequest) => {
+  console.log('[uploadDocs] request:', request);
+  return axiosInstance
+    .post<IUploadDocsResponse>('/v1/docs/upload', request)
+    .then((res) => {
+      console.log('[uploadDocs] response:', res.data);
+      return res.data;
+    });
 };
-
-export const uploadDocs = (data: UploadDocsFormValues, fileUrl?: string) =>
-  axiosInstance
-    .post<IUploadDocsResponse>('/v1/docs/upload', toUploadDocsRequest(data, fileUrl))
-    .then((res) => res.data);
 
 export const getDocsStatus = (id: string) =>
   axiosInstance.get<IDocsStatusResponse>(`/v1/docs/${id}/status`).then((res) => res.data);

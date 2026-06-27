@@ -1,11 +1,11 @@
 export type DocumentType = 'FILE' | 'TEXT';
 
 export interface IFileUploadResponse {
-  fileName: string;
-  fileSize: number;
-  fileKey: string;
-  fileUrl: string;
-  mimeType: string;
+  file_name: string;
+  file_size: number;
+  file_key: string;
+  file_url: string;
+  mime_type: string;
 }
 
 export interface IUploadDocsRequest {
