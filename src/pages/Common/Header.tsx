@@ -34,7 +34,13 @@ export const Header: React.FC = () => {
           boxSizing: 'border-box',
         }}
       >
-        <Box sx={{ fontWeight: 'bold', fontSize: '24px', color: '#000' }}>Logo</Box>
+        <Box
+          component="img"
+          src="/mydocs_logo.svg"
+          alt="MyDocs"
+          onClick={() => navigate('/')}
+          sx={{ height: '80px', cursor: 'pointer' }}
+        />
 
         {isLoggedIn ? (
           <Profile />
