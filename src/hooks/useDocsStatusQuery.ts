@@ -6,5 +6,5 @@ export const useDocsStatusQuery = (id: string) =>
     queryKey: ['docsStatus', id],
     queryFn: () => getDocsStatus(id),
     refetchInterval: (query) =>
-      query.state.data?.status === 'SUCCESS' ? false : 3000,
+      query.state.data?.status === 'COMPLETED' ? false : 3000,
   });
