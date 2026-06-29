@@ -4,13 +4,14 @@ import { useState, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export const UploadDocsFormFile: React.FC = () => {
-  const { register, setValue, watch } = useFormContext();
+  const { register, setValue, watch } = useFormContext<import('./UploadDocsForm').UploadDocsFormValues>();
   const [tab, setTab] = useState('1');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const file = watch('file');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
+    setValue('mode', newValue === '1' ? 'FILE' : 'TEXT');
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

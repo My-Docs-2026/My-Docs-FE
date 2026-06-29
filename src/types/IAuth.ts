@@ -11,7 +11,7 @@ export interface ILoginRequest {
 }
 
 export interface ILoginResponse {
-  accessToken: string;
+  access_token: string;
 }
 
 export interface ISendVerificationEmailRequest {
