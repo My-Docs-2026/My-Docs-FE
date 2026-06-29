@@ -32,7 +32,10 @@ export const uploadDocs = (request: IUploadDocsRequest) => {
 };
 
 export const getDocsStatus = (id: string) =>
-  axiosInstance.get<IDocsStatusResponse>(`/v1/docs/${id}/status`).then((res) => res.data);
+  axiosInstance.get<IDocsStatusResponse>(`/v1/docs/${id}/status`).then((res) => {
+    console.log('[getDocsStatus] id:', id, '| response:', res.data);
+    return res.data;
+  });
 
 export const getAnalysis = (id: string) =>
   axiosInstance.get<IAnalyzeDocsResponse>(`/v1/docs/${id}`).then((res) => res.data);
