@@ -40,7 +40,7 @@ export const AnalyzeDocsResult: React.FC = () => {
                 긍정적 조항
               </Typography>
               <Typography sx={{ fontSize: '15px', color: '#475569', lineHeight: 1.8 }}>
-                {analysis.prosSummary}
+                {analysis.pros_summary}
               </Typography>
             </Stack>
 
@@ -48,7 +48,7 @@ export const AnalyzeDocsResult: React.FC = () => {
               <Typography sx={{ fontSize: '18px', fontWeight: 600, color: '#0F172A' }}>
                 상세 분석
               </Typography>
-              {analysis.analysisDetail.map((item, index) => (
+              {analysis.analysis_detail.map((item, index) => (
                 <Stack
                   key={index}
                   sx={{
@@ -61,17 +61,17 @@ export const AnalyzeDocsResult: React.FC = () => {
                 >
                   <Stack direction="row" sx={{ alignItems: 'center', gap: '10px' }}>
                     <Chip
-                      label={item.riskLevel}
+                      label={item.risk_level}
                       size="small"
                       sx={{
-                        backgroundColor: riskColor(item.riskLevel),
+                        backgroundColor: riskColor(item.risk_level),
                         color: '#FFFFFF',
                         fontWeight: 600,
                         fontSize: '12px',
                       }}
                     />
                     <Typography sx={{ fontSize: '16px', fontWeight: 600, color: '#0F172A' }}>
-                      {item.clauseTitle}
+                      {item.clause_title}
                     </Typography>
                   </Stack>
 
@@ -91,7 +91,7 @@ export const AnalyzeDocsResult: React.FC = () => {
                         lineHeight: 1.7,
                       }}
                     >
-                      {item.originalText}
+                      {item.original_text}
                     </Typography>
                   </Stack>
 

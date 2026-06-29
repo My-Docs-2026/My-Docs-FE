@@ -9,7 +9,7 @@ export const AnalyzingDocs: React.FC = () => {
   const { data } = useDocsStatusQuery(id!);
 
   useEffect(() => {
-    if (data?.status === 'SUCCESS') {
+    if (data?.status === 'COMPLETED') {
       navigate(`/analyze/${id}`);
     }
   }, [data?.status, id, navigate]);

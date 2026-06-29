@@ -16,39 +16,39 @@ export interface IUploadDocsRequest {
 }
 
 export interface IUploadDocsResponse {
-  documentId: string;
+  document_id: string;
   title: string;
   type: string;
-  fileUrl: string | null;
+  file_url: string | null;
   status: string;
-  createdAt: string;
+  created_at: string;
 }
 
 export interface IDocsStatusResponse {
-  documentId: string;
+  document_id: string;
   status: string;
 }
 
 export interface IAnalysisDetailItem {
-  riskLevel: string;
-  clauseTitle: string;
-  originalText: string;
+  risk_level: string;
+  clause_title: string;
+  original_text: string;
   warning: string;
 }
 
 export interface IAnalysisResult {
   summary: string;
-  prosSummary: string;
-  analysisDetail: IAnalysisDetailItem[];
-  analyzedAt: string;
+  pros_summary: string;
+  analysis_detail: IAnalysisDetailItem[];
+  analyzed_at: string;
 }
 
 export interface IAnalyzeDocsResponse {
-  documentId: string;
+  document_id: string;
   title: string;
   type: string;
-  fileUrl: string | null;
+  file_url: string | null;
   status: string;
-  createdAt: string;
+  created_at: string;
   analysis: IAnalysisResult | null;
 }
