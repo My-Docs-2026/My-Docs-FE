@@ -5,6 +5,7 @@ import type {
   IUploadDocsResponse,
   IDocsStatusResponse,
   IAnalyzeDocsResponse,
+  IDocsListResponse,
 } from '../types/IDocs';
 
 export const uploadFile = (file: File) => {
@@ -39,3 +40,8 @@ export const getDocsStatus = (id: string) =>
 
 export const getAnalysis = (id: string) =>
   axiosInstance.get<IAnalyzeDocsResponse>(`/v1/docs/${id}`).then((res) => res.data);
+
+export const getDocsList = (pageNumber: number, pageSize: number, sort: string) =>
+  axiosInstance
+    .get<IDocsListResponse>('/v1/docs', { params: { pageNumber, pageSize, sort } })
+    .then((res) => res.data);
