@@ -4,6 +4,7 @@ import { Home } from '../pages/Home/Home';
 import { UploadDocs } from '../pages/UploadDocs/UploadDocs';
 import { AnalyzingDocs } from '../pages/AnalyzeDocs/AnalyzingDocs';
 import { AnalyzeDocsResult } from '../pages/AnalyzeDocs/AnalyzeDocsResult';
+import { DocsList } from '../pages/DocsList/DocsList';
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: 'analyze/:id',
         element: <AnalyzeDocsResult />,
+      },
+      {
+        path: 'list',
+        element: <DocsList />,
       },
     ],
   },

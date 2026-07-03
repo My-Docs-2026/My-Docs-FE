@@ -52,3 +52,19 @@ export interface IAnalyzeDocsResponse {
   created_at: string;
   analysis: IAnalysisResult | null;
 }
+
+export interface IDocsListItemResponse {
+  document_id: string;
+  title: string;
+  status: string;
+  created_at: string;
+  summary: string | null;
+}
+
+export interface IDocsListResponse {
+  content: IDocsListItemResponse[];
+  total_elements: number;
+  total_pages: number;
+  page_number: number;
+  page_size: number;
+}
