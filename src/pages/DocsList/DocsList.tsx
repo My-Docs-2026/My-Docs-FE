@@ -2,9 +2,19 @@ import { Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import { DocsListSearch } from './DocsListSearch';
 import { DocsListGrid } from './DocsListGrid';
+import { ConfirmDialog } from '../Components/Common/ConfirmDialog';
+import { useDeleteDialog } from '../../stores/Docs/useDeleteDialog';
+import { useDeleteDocMutation } from '../../hooks/useDeleteDocMutation';
 
 export const DocsList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { open, targetId, closeDialog } = useDeleteDialog();
+  const { mutate: deleteMutate } = useDeleteDocMutation();
+
+  const handleConfirm = () => {
+    if (targetId) deleteMutate(targetId);
+    closeDialog();
+  };
 
   return (
     <Stack
@@ -22,6 +32,15 @@ export const DocsList: React.FC = () => {
       </Typography>
       <DocsListSearch value={searchQuery} onChange={setSearchQuery} />
       <DocsListGrid searchQuery={searchQuery} />
+
+      <ConfirmDialog
+        open={open}
+        title="문서를 삭제하시겠습니까?"
+        description="삭제된 문서는 복구할 수 없습니다."
+        confirmLabel="삭제"
+        onConfirm={handleConfirm}
+        onCancel={closeDialog}
+      />
     </Stack>
   );
 };

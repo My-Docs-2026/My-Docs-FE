@@ -11,7 +11,11 @@ import type {
 export const uploadFile = (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
-  console.log('[uploadFile] request:', { fileName: file.name, fileSize: file.size, fileType: file.type });
+  console.log('[uploadFile] request:', {
+    fileName: file.name,
+    fileSize: file.size,
+    fileType: file.type,
+  });
   return axiosInstance
     .post<IFileUploadResponse>('/v1/docs/file', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -24,12 +28,10 @@ export const uploadFile = (file: File) => {
 
 export const uploadDocs = (request: IUploadDocsRequest) => {
   console.log('[uploadDocs] request:', request);
-  return axiosInstance
-    .post<IUploadDocsResponse>('/v1/docs/upload', request)
-    .then((res) => {
-      console.log('[uploadDocs] response:', res.data);
-      return res.data;
-    });
+  return axiosInstance.post<IUploadDocsResponse>('/v1/docs/upload', request).then((res) => {
+    console.log('[uploadDocs] response:', res.data);
+    return res.data;
+  });
 };
 
 export const getDocsStatus = (id: string) =>
@@ -47,4 +49,4 @@ export const getDocsList = (pageNumber: number, pageSize: number, sort: string) 
     .then((res) => res.data);
 
 export const deleteDoc = (id: string) =>
-  axiosInstance.delete<{ message: string }>(`/${id}`).then((res) => res.data);
+  axiosInstance.delete<{ message: string }>(`/v1/docs/${id}`).then((res) => res.data);

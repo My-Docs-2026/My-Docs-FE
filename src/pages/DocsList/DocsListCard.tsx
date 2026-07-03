@@ -2,7 +2,7 @@ import { Box, Chip, IconButton, Stack, Typography, Button } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteDocMutation } from '../../hooks/useDeleteDocMutation';
+import { useDeleteDialog } from '../../stores/Docs/useDeleteDialog';
 
 interface DocsListCardProps {
   id: string;
@@ -36,7 +36,7 @@ const formatDate = (dateStr: string) => {
 
 export const DocsListCard: React.FC<DocsListCardProps> = ({ id, title, status, createdAt, summary }) => {
   const navigate = useNavigate();
-  const { mutate: deleteMutate } = useDeleteDocMutation();
+  const openDialog = useDeleteDialog((s) => s.openDialog);
   const isCompleted = status === 'COMPLETED';
   const isFailed = status === 'FAILED';
 
@@ -46,7 +46,7 @@ export const DocsListCard: React.FC<DocsListCardProps> = ({ id, title, status, c
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    deleteMutate(id);
+    openDialog(id);
   };
 
   const handleRetry = (e: React.MouseEvent) => {
