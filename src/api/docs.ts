@@ -45,3 +45,6 @@ export const getDocsList = (pageNumber: number, pageSize: number, sort: string) 
   axiosInstance
     .get<IDocsListResponse>('/v1/docs', { params: { pageNumber, pageSize, sort } })
     .then((res) => res.data);
+
+export const deleteDoc = (id: string) =>
+  axiosInstance.delete<{ message: string }>(`/${id}`).then((res) => res.data);
