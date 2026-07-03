@@ -1,43 +1,41 @@
-import { Box, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Box, CircularProgress, Pagination, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { useState } from 'react';
 import { DocsListCard } from './DocsListCard';
+import { useDocsListQuery } from '../../hooks/useDocsListQuery';
 
-const MOCK_DOCS = Array.from({ length: 12 }, (_, i) => ({
-  id: `doc-${i + 1}`,
-  title: `문서 제목 ${i + 1} - 근로계약서 검토 요청`,
-  type: i % 3 === 0 ? 'TEXT' : 'FILE',
-  status: i % 4 === 3 ? 'PENDING' : 'COMPLETED',
-  createdAt: `2026-06-${String(30 - i).padStart(2, '0')}`,
-}));
+const PAGE_SIZE = 12;
+
+type SortType = 'latest' | 'title';
 
 interface DocsListGridProps {
   searchQuery: string;
 }
 
-type SortType = 'latest' | 'alpha';
-
 export const DocsListGrid: React.FC<DocsListGridProps> = ({ searchQuery }) => {
   const [sort, setSort] = useState<SortType>('latest');
+  const [page, setPage] = useState(0);
 
-  const filtered = MOCK_DOCS.filter((doc) =>
+  const { data, isLoading } = useDocsListQuery(page, PAGE_SIZE, sort);
+
+  const filtered = (data?.content ?? []).filter((doc) =>
     doc.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  const sorted = [...filtered].sort((a, b) => {
-    if (sort === 'alpha') return a.title.localeCompare(b.title, 'ko');
-    return b.createdAt.localeCompare(a.createdAt);
-  });
 
   return (
     <Stack sx={{ gap: '20px' }}>
       <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography sx={{ fontSize: '15px', color: '#64748B' }}>
-          총 {filtered.length}개
+          총 {data?.total_elements ?? 0}개
         </Typography>
         <ToggleButtonGroup
           value={sort}
           exclusive
-          onChange={(_, value) => value && setSort(value)}
+          onChange={(_, value) => {
+            if (value) {
+              setSort(value);
+              setPage(0);
+            }
+          }}
           size="small"
         >
           <ToggleButton
@@ -53,7 +51,7 @@ export const DocsListGrid: React.FC<DocsListGridProps> = ({ searchQuery }) => {
             최신순
           </ToggleButton>
           <ToggleButton
-            value="alpha"
+            value="title"
             sx={{
               fontSize: '13px',
               fontWeight: 500,
@@ -67,17 +65,44 @@ export const DocsListGrid: React.FC<DocsListGridProps> = ({ searchQuery }) => {
         </ToggleButtonGroup>
       </Stack>
 
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '16px',
-        }}
-      >
-        {sorted.map((doc) => (
-          <DocsListCard key={doc.id} {...doc} />
-        ))}
-      </Box>
+      {isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: '60px' }}>
+          <CircularProgress sx={{ color: '#2563EB' }} />
+        </Box>
+      ) : filtered.length === 0 ? (
+        <Box sx={{ textAlign: 'center', py: '60px' }}>
+          <Typography sx={{ color: '#94A3B8', fontSize: '15px' }}>문서가 없습니다</Typography>
+        </Box>
+      ) : (
+        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+          {filtered.map((doc) => (
+            <DocsListCard
+              key={doc.document_id}
+              id={doc.document_id}
+              title={doc.title}
+              status={doc.status}
+              createdAt={doc.created_at}
+              summary={doc.summary}
+            />
+          ))}
+        </Box>
+      )}
+
+      {(data?.total_pages ?? 0) > 1 && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', pt: '8px' }}>
+          <Pagination
+            count={data?.total_pages ?? 1}
+            page={page + 1}
+            onChange={(_, value) => setPage(value - 1)}
+            sx={{
+              '& .MuiPaginationItem-root.Mui-selected': {
+                backgroundColor: '#2563EB',
+                color: '#fff',
+              },
+            }}
+          />
+        </Box>
+      )}
     </Stack>
   );
 };

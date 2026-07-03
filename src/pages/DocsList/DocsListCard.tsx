@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 interface DocsListCardProps {
   id: string;
   title: string;
-  type: string;
   status: string;
   createdAt: string;
+  summary: string | null;
 }
 
 const statusColor = (status: string) => {
@@ -15,7 +15,7 @@ const statusColor = (status: string) => {
   return '#94A3B8';
 };
 
-export const DocsListCard: React.FC<DocsListCardProps> = ({ id, title, type, status, createdAt }) => {
+export const DocsListCard: React.FC<DocsListCardProps> = ({ id, title, status, createdAt, summary }) => {
   const navigate = useNavigate();
 
   return (
@@ -35,16 +35,16 @@ export const DocsListCard: React.FC<DocsListCardProps> = ({ id, title, type, sta
       }}
     >
       <Stack sx={{ gap: '12px', height: '100%' }}>
-        <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <Chip
-            label={type === 'FILE' ? '파일' : '텍스트'}
-            size="small"
-            sx={{ backgroundColor: '#EFF6FF', color: '#2563EB', fontWeight: 600, fontSize: '12px' }}
-          />
+        <Stack direction="row" sx={{ justifyContent: 'flex-end' }}>
           <Chip
             label={status === 'COMPLETED' ? '분석 완료' : '분석 중'}
             size="small"
-            sx={{ backgroundColor: `${statusColor(status)}20`, color: statusColor(status), fontWeight: 600, fontSize: '12px' }}
+            sx={{
+              backgroundColor: `${statusColor(status)}20`,
+              color: statusColor(status),
+              fontWeight: 600,
+              fontSize: '12px',
+            }}
           />
         </Stack>
 
@@ -63,6 +63,22 @@ export const DocsListCard: React.FC<DocsListCardProps> = ({ id, title, type, sta
         >
           {title}
         </Typography>
+
+        {summary && (
+          <Typography
+            sx={{
+              fontSize: '13px',
+              color: '#64748B',
+              overflow: 'hidden',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              lineHeight: 1.6,
+            }}
+          >
+            {summary}
+          </Typography>
+        )}
 
         <Typography sx={{ fontSize: '13px', color: '#94A3B8', marginTop: 'auto' }}>
           {createdAt}
