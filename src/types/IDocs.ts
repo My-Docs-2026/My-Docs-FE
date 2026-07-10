@@ -34,6 +34,7 @@ export interface IAnalysisDetailItem {
   clause_title: string;
   original_text: string;
   warning: string;
+  page_number: number;
 }
 
 export interface IAnalysisResult {
