@@ -41,7 +41,10 @@ export const getDocsStatus = (id: string) =>
   });
 
 export const getAnalysis = (id: string) =>
-  axiosInstance.get<IAnalyzeDocsResponse>(`/v1/docs/${id}`).then((res) => res.data);
+  axiosInstance.get<IAnalyzeDocsResponse>(`/v1/docs/${id}`).then((res) => {
+    console.log('[getAnalysis] response:', res.data);
+    return res.data;
+  });
 
 export const getDocsList = (pageNumber: number, pageSize: number, sort: string) =>
   axiosInstance
